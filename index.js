@@ -1,5 +1,5 @@
 //CONFIGURATION DATA
-const bits = 5;
+const bits = 16;
 
 //PROGRAM
 function full_adder(a, b, c_in)
@@ -39,24 +39,22 @@ function sum()
 		result = full_adder(a[i], b[i], result.carry);
 		totalSum.push(result.sum);
 	}
-	console.log(carry);
+	console.log(totalSum);
 	updateGraphics(totalSum, carry);
 }
 
 function updateGraphics(totalSum, carry)
 {
 	for(var i = 0; i < totalSum.length; i++)
-	{
 		document.getElementById(`out${i}`).style.backgroundColor = totalSum[i] == 1 ? '#090' : '#900';
-	}
-
-	 document.getElementById(`out${bits}`).style.backgroundColor = carry == 1 ? '#099' : '#990';
+	 document.getElementById(`out${bits}`).style.backgroundColor = carry == 1 ? '#099' : '#900';
 }
 
 function setup()
 {
 	for(var i = 0; i < bits; i++)
 	{
+		num = Math.pow(2, i);
 		document.getElementById("inputs").innerHTML +=
 		`<label class="switch">
 			<input type="checkbox" id="a${i}" onclick="sum()">
@@ -65,12 +63,12 @@ function setup()
 		<label class="switch">
 			<input type="checkbox" id="b${i}" onclick="sum()">
 			<div class="slider"></div>
-		</label><br>`;
+		</label><span>${num}</span><br>`;
 
 		document.getElementById("outputs").innerHTML +=
-		`<div class="square" id="out${i}"></div>`;
+		`<div class="square" id="out${i}"><span>${num}</span></div>`;
 	}
 
 	document.getElementById("outputs").innerHTML +=
-	`<div class="square carry" id="out${bits}"></div>`;
+	`<div class="square" id="out${bits}"><span>Carry</span></div>`;
 }
